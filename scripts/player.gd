@@ -35,8 +35,11 @@ func _process(delta: float) -> void:
 	
 func _physics_process(delta: float) -> void:
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
+	var dir = camera.basis.z * input.y + camera.basis.x * input.x
+	dir.y = 0
+	dir = dir.normalized()
 	
-	velocity.x = input.x * move_speed
-	velocity.z = input.y * move_speed
+	velocity.x = dir.x * move_speed
+	velocity.z = dir.y * move_speed
 	
 	move_and_slide()
