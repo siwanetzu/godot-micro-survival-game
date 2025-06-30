@@ -1,8 +1,12 @@
-[gd_scene load_steps=12 format=3 uid="uid://o0dvakt63l6d"]
+[gd_scene load_steps=13 format=3 uid="uid://o0dvakt63l6d"]
 
 [ext_resource type="ArrayMesh" uid="uid://cf78h4ebj6ls1" path="res://assets/Models/Terrain.obj" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://bdbaw3xnhy6e5" path="res://scenes/day_night_cycle.gd" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://dvmik3nw0eau0" path="res://scripts/player.gd" id="2_0wfyh"]
+
+[sub_resource type="Gradient" id="Gradient_sugp2"]
+offsets = PackedFloat32Array(0, 0.261494, 0.534483, 0.761494, 0.997126)
+colors = PackedColorArray(0.909804, 0.564706, 0.2, 1, 0.967664, 0.946152, 0.78751, 1, 0.977328, 0.972634, 0.96945, 1, 0.968627, 0.945098, 0.788235, 1, 0.909804, 0.564706, 0.2, 1)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
 sky_top_color = Color(0.256121, 0.59895, 0.792584, 1)
@@ -41,15 +45,16 @@ data = PackedVector3Array(-24.4957, -1.3, 25, -25, -1.3, 25, -24.4957, -1.3, 24.
 [node name="DayNightCycle" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25689, 0)
 script = ExtResource("1_sugp2")
+start_time = 0.5
+sun_color = SubResource("Gradient_sugp2")
+
+[node name="Sun" type="DirectionalLight3D" parent="DayNightCycle"]
+transform = Transform3D(0.0598228, -0.468894, -0.881226, -0.863957, -0.466517, 0.18958, -0.5, 0.75, -0.433013, 0, 12.729, 0)
+light_color = Color(0.88553, 0.919232, 0.838971, 1)
+shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="DayNightCycle"]
 environment = SubResource("Environment_sugp2")
-
-[node name="Sun" type="DirectionalLight3D" parent="DayNightCycle"]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 8.1065, 0)
-light_color = Color(0.88553, 0.919232, 0.838971, 1)
-shadow_enabled = true
-sky_mode = 1
 
 [node name="Moon" type="DirectionalLight3D" parent="DayNightCycle"]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 8.1065, 0)
