@@ -35,6 +35,12 @@ func _process(delta: float) -> void:
 	camera.position = head.global_position
 	
 func _physics_process(delta: float) -> void:
+	if not is_on_floor():
+		velocity.y -= gravity * delta
+	
+	if Input.is_action_just_pressed("jump") and is_on_floor():
+		velocity.y = jump_force
+	
 	var input = Input.get_vector("move_left", "move_right", "move_forward", "move_back")
 	var dir = camera.basis.z * input.y + camera.basis.x * input.x
 	dir.y = 0
