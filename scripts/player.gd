@@ -20,7 +20,11 @@ func _ready() -> void:
 	get_node("/root/Main").add_child.call_deferred(camera)
 	
 func _input(event):
-	pass
+	if event is InputEventMouseMotion:
+		camera.rotation_degrees.x += event.relative.y * -look_sens
+		camera.rotation_degrees.x = clamp(camera.rotation_degrees.x, min_x_rot, max_x_rot)
+		
+		camera.rotation_degrees.y += event.relative.x * -look_sens
 
 func _process(delta: float) -> void:
 	camera.position = head.global_position
