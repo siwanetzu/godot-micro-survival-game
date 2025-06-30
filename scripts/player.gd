@@ -40,6 +40,6 @@ func _physics_process(delta: float) -> void:
 	dir = dir.normalized()
 	
 	velocity.x = dir.x * move_speed
-	velocity.z = dir.y * move_speed
+	velocity.z = dir.z * move_speed
 	
 	move_and_slide()
