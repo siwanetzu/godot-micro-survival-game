@@ -25,6 +25,10 @@ func _input(event):
 		camera.rotation_degrees.x = clamp(camera.rotation_degrees.x, min_x_rot, max_x_rot)
 		
 		camera.rotation_degrees.y += event.relative.x * -look_sens
+		
+		
+	if Input.is_action_just_pressed("quit"):
+		get_tree().quit()
 
 func _process(delta: float) -> void:
 	camera.position = head.global_position
