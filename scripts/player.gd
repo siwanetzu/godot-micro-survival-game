@@ -15,6 +15,7 @@ var mouse_dir: Vector2
 
 func _ready() -> void:
 	camera = get_node("Camera3D")
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	head = get_node("Head")
 	remove_child(camera)
 	get_node("/root/Main").add_child.call_deferred(camera)
