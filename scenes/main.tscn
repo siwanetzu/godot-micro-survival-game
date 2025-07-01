@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://o0dvakt63l6d"]
+[gd_scene load_steps=25 format=3 uid="uid://o0dvakt63l6d"]
 
 [ext_resource type="ArrayMesh" uid="uid://cf78h4ebj6ls1" path="res://assets/Models/Terrain.obj" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://bdbaw3xnhy6e5" path="res://scenes/day_night_cycle.gd" id="1_sugp2"]
@@ -68,6 +68,17 @@ data = PackedVector3Array(-24.4957, -1.3, 25, -25, -1.3, 25, -24.4957, -1.3, 24.
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_0wfyh"]
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
+bg_color = Color(0.147672, 0.147672, 0.147672, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbgi4"]
+bg_color = Color(1, 0.188235, 0.258824, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
+font_size = 25
+outline_size = 5
+outline_color = Color(0, 0, 0, 1)
+
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tbgi4"]
 height = 6.26562
 
@@ -127,6 +138,33 @@ current = true
 
 [node name="Head" type="Node3D" parent="Player"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.521, 0)
+
+[node name="PlayerNeeds" type="Node3D" parent="Player"]
+
+[node name="Need" type="Control" parent="Player/PlayerNeeds"]
+layout_mode = 3
+offset_left = 4.0
+offset_top = 6.0
+offset_right = 304.0
+offset_bottom = 52.0
+
+[node name="NeedBar" type="ProgressBar" parent="Player/PlayerNeeds/Need"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 45.0
+theme_override_styles/background = SubResource("StyleBoxFlat_jyhfs")
+theme_override_styles/fill = SubResource("StyleBoxFlat_tbgi4")
+value = 50.0
+show_percentage = false
+
+[node name="Label" type="Label" parent="Player/PlayerNeeds/Need/NeedBar"]
+layout_mode = 0
+offset_right = 300.0
+offset_bottom = 44.0
+text = "Health: 100 / 100"
+label_settings = SubResource("LabelSettings_tefeu")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Tree" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16593, 4.93812)
