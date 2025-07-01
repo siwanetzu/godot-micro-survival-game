@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://o0dvakt63l6d"]
+[gd_scene load_steps=22 format=3 uid="uid://o0dvakt63l6d"]
 
 [ext_resource type="ArrayMesh" uid="uid://cf78h4ebj6ls1" path="res://assets/Models/Terrain.obj" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://bdbaw3xnhy6e5" path="res://scenes/day_night_cycle.gd" id="1_sugp2"]
@@ -8,6 +8,34 @@
 [sub_resource type="Gradient" id="Gradient_sugp2"]
 offsets = PackedFloat32Array(0, 0.261494, 0.534483, 0.761494, 0.997126)
 colors = PackedColorArray(0.909804, 0.564706, 0.2, 1, 0.967664, 0.946152, 0.78751, 1, 0.977328, 0.972634, 0.96945, 1, 0.968627, 0.945098, 0.788235, 1, 0.909804, 0.564706, 0.2, 1)
+
+[sub_resource type="Curve" id="Curve_jyhfs"]
+_data = [Vector2(0.205184, 0.279363), 0.0, 0.0, 0, 0, Vector2(0.332613, 0.926272), 0.0, 0.0, 0, 0, Vector2(0.609856, 0.923184), 0.0, 0.0, 0, 0, Vector2(0.773218, 0.29839), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_jyhfs"]
+offsets = PackedFloat32Array(0.568129)
+colors = PackedColorArray(0.202016, 0.319695, 0.675649, 1)
+
+[sub_resource type="Curve" id="Curve_tbgi4"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.25486, 0.114355), 0.0, 0.0, 0, 0, Vector2(0.75594, 0.114355), 0.0, 0.0, 0, 0, Vector2(1, 1), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Curve" id="Curve_tefeu"]
+_data = [Vector2(0, 0), 0.0, -0.225345, 0, 0, Vector2(0.259179, 0.254432), 0.0, 0.0, 0, 0, Vector2(0.522678, 0.633736), 0.0, 0.0, 0, 0, Vector2(0.74946, 0.267472), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Curve" id="Curve_o6xl0"]
+_data = [Vector2(0, 0.00590909), 0.0, 0.0, 0, 0, Vector2(0.24406, 0.21277), 0.0, 0.0, 0, 0, Vector2(0.518359, 0.604623), 0.0, 0.0, 0, 0, Vector2(0.74514, 0.310282), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 5
+
+[sub_resource type="Gradient" id="Gradient_tbgi4"]
+offsets = PackedFloat32Array(0, 0.2, 0.3, 0.5, 0.7, 0.8, 1)
+colors = PackedColorArray(0.00784314, 0.0431373, 0.180392, 1, 0.101961, 0.137255, 0.494118, 1, 0.360784, 0.533333, 0.690196, 1, 0.529412, 0.807843, 0.921569, 1, 0.360784, 0.533333, 0.690196, 1, 0.101961, 0.137255, 0.494118, 1, 0.00784314, 0.0431373, 0.180392, 1)
+
+[sub_resource type="Gradient" id="Gradient_tefeu"]
+offsets = PackedFloat32Array(0, 0.101617, 0.189376, 0.526559, 0.833718, 0.907621, 1)
+colors = PackedColorArray(0.142253, 0.197977, 0.464029, 1, 0.842714, 0.313351, 0.243717, 1, 0.835294, 0.537255, 0.34902, 1, 0.243137, 0.552941, 0.909804, 1, 0.834946, 0.53912, 0.349149, 1, 0.843137, 0.313726, 0.243137, 1, 0.141176, 0.196078, 0.462745, 1)
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_o5qli"]
 sky_top_color = Color(0.256121, 0.59895, 0.792584, 1)
@@ -21,11 +49,10 @@ sky_material = SubResource("ProceduralSkyMaterial_o5qli")
 [sub_resource type="Environment" id="Environment_sugp2"]
 background_mode = 2
 sky = SubResource("Sky_0wfyh")
-ambient_light_color = Color(2.88785e-06, 0.805381, 0.935277, 1)
+ambient_light_source = 2
+ambient_light_color = Color(0.3457, 0.883104, 1, 1)
 ambient_light_energy = 0.0
-reflected_light_source = 2
 tonemap_mode = 2
-glow_enabled = true
 glow_intensity = 1.31
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_0wfyh"]
@@ -51,20 +78,27 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25689, 0)
 script = ExtResource("1_sugp2")
 start_time = 0.5
 sun_color = SubResource("Gradient_sugp2")
+sun_intensity = SubResource("Curve_jyhfs")
+moon_color = SubResource("Gradient_jyhfs")
+moon_intensity = SubResource("Curve_tbgi4")
+ambient_intensity = SubResource("Curve_tefeu")
+sky_energy = SubResource("Curve_o6xl0")
+sky_top_color = SubResource("Gradient_tbgi4")
+sky_horizon_color = SubResource("Gradient_tefeu")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="DayNightCycle"]
+environment = SubResource("Environment_sugp2")
 
 [node name="Sun" type="DirectionalLight3D" parent="DayNightCycle"]
 transform = Transform3D(0.0598228, -0.468894, -0.881226, -0.863957, -0.466517, 0.18958, -0.5, 0.75, -0.433013, 0, 12.729, 0)
 light_color = Color(0.88553, 0.919232, 0.838971, 1)
 shadow_enabled = true
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="DayNightCycle"]
-environment = SubResource("Environment_sugp2")
-
 [node name="Moon" type="DirectionalLight3D" parent="DayNightCycle"]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 8.1065, 0)
-visible = false
-light_color = Color(0.88553, 0.919232, 0.838971, 1)
+light_color = Color(0.254, 8.37475e-05, 0.880398, 1)
 shadow_enabled = true
+sky_mode = 1
 
 [node name="Terrain" type="StaticBody3D" parent="."]
 
