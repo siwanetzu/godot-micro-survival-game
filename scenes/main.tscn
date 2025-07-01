@@ -1,9 +1,10 @@
-[gd_scene load_steps=28 format=3 uid="uid://o0dvakt63l6d"]
+[gd_scene load_steps=29 format=3 uid="uid://o0dvakt63l6d"]
 
 [ext_resource type="ArrayMesh" uid="uid://cf78h4ebj6ls1" path="res://assets/Models/Terrain.obj" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://bdbaw3xnhy6e5" path="res://scripts/day_night_cycle.gd" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://dvmik3nw0eau0" path="res://scripts/player.gd" id="2_0wfyh"]
 [ext_resource type="ArrayMesh" uid="uid://c0ubr43v5epy2" path="res://assets/Models/treePine.obj" id="4_jyhfs"]
+[ext_resource type="Script" uid="uid://ckdh64tv82kwe" path="res://scripts/player_needs.gd" id="4_o6xl0"]
 [ext_resource type="PackedScene" uid="uid://bdci8dp4llp8s" path="res://scenes/need_UI_bar.tscn" id="4_tbgi4"]
 [ext_resource type="Script" uid="uid://gvr61cokkwtx" path="res://scripts/need.gd" id="4_tefeu"]
 
@@ -90,7 +91,6 @@ height = 6.26562
 [node name="DayNightCycle" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25689, 0)
 script = ExtResource("1_sugp2")
-day_length = 100.0
 sun_color = SubResource("Gradient_sugp2")
 sun_intensity = SubResource("Curve_jyhfs")
 moon_color = SubResource("Gradient_jyhfs")
@@ -143,6 +143,9 @@ current = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.521, 0)
 
 [node name="PlayerNeeds" type="Node3D" parent="Player"]
+script = ExtResource("4_o6xl0")
+no_hunger_health_decay = 1.0
+no_thirst_health_decay = 1.0
 
 [node name="Health" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
 script = ExtResource("4_tefeu")
@@ -162,7 +165,7 @@ need_name = "Health"
 script = ExtResource("4_tefeu")
 max_value = 100.0
 start_value = 70.0
-decay_rate = 0.3
+decay_rate = 3.0
 ui_bar = NodePath("NeedBar")
 
 [node name="NeedBar" parent="Player/PlayerNeeds/Hunger" instance=ExtResource("4_tbgi4")]
@@ -171,18 +174,12 @@ offset_top = 635.0
 offset_right = 321.0
 offset_bottom = 680.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_o6xl0")
-max_value = 0.0
-script = ExtResource("4_tefeu")
-max_value = 0.0
-start_value = 0.0
-regen_rate = 0.0
-decay_rate = 0.0
 
 [node name="Thirst" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
 script = ExtResource("4_tefeu")
 max_value = 100.0
 start_value = 70.0
-decay_rate = 1.0
+decay_rate = 5.0
 ui_bar = NodePath("NeedBar")
 
 [node name="NeedBar" parent="Player/PlayerNeeds/Thirst" instance=ExtResource("4_tbgi4")]
@@ -191,7 +188,6 @@ offset_top = 685.0
 offset_right = 321.0
 offset_bottom = 730.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_tipki")
-need_name = "Thirst"
 
 [node name="Sleep" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
 script = ExtResource("4_tefeu")
@@ -205,7 +201,6 @@ offset_top = 734.0
 offset_right = 321.0
 offset_bottom = 779.0
 theme_override_styles/fill = SubResource("StyleBoxFlat_85g3d")
-need_name = "Sleep"
 
 [node name="Tree" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16593, 4.93812)
