@@ -76,7 +76,7 @@ height = 6.26562
 [node name="DayNightCycle" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.25689, 0)
 script = ExtResource("1_sugp2")
-start_time = 0.5
+day_length = 100.0
 sun_color = SubResource("Gradient_sugp2")
 sun_intensity = SubResource("Curve_jyhfs")
 moon_color = SubResource("Gradient_jyhfs")

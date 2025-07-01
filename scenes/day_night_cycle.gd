@@ -19,10 +19,9 @@ var moon : DirectionalLight3D
 @export var ambient_intensity: Curve
 @export var sky_energy: Curve
 
+# environment
 var env: Environment
 var sky_material: ProceduralSkyMaterial
-
-# tinting sky dark blue
 @export var sky_top_color: Gradient
 @export var sky_horizon_color: Gradient
 
