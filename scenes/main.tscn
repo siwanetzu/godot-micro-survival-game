@@ -1,9 +1,11 @@
-[gd_scene load_steps=25 format=3 uid="uid://o0dvakt63l6d"]
+[gd_scene load_steps=28 format=3 uid="uid://o0dvakt63l6d"]
 
 [ext_resource type="ArrayMesh" uid="uid://cf78h4ebj6ls1" path="res://assets/Models/Terrain.obj" id="1_o5qli"]
-[ext_resource type="Script" uid="uid://bdbaw3xnhy6e5" path="res://scenes/day_night_cycle.gd" id="1_sugp2"]
+[ext_resource type="Script" uid="uid://bdbaw3xnhy6e5" path="res://scripts/day_night_cycle.gd" id="1_sugp2"]
 [ext_resource type="Script" uid="uid://dvmik3nw0eau0" path="res://scripts/player.gd" id="2_0wfyh"]
 [ext_resource type="ArrayMesh" uid="uid://c0ubr43v5epy2" path="res://assets/Models/treePine.obj" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://bdci8dp4llp8s" path="res://scenes/need_UI_bar.tscn" id="4_tbgi4"]
+[ext_resource type="Script" uid="uid://gvr61cokkwtx" path="res://scripts/need.gd" id="4_tefeu"]
 
 [sub_resource type="Gradient" id="Gradient_sugp2"]
 offsets = PackedFloat32Array(0, 0.261494, 0.534483, 0.761494, 0.997126)
@@ -68,16 +70,17 @@ data = PackedVector3Array(-24.4957, -1.3, 25, -25, -1.3, 25, -24.4957, -1.3, 24.
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_0wfyh"]
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jyhfs"]
-bg_color = Color(0.147672, 0.147672, 0.147672, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tefeu"]
+bg_color = Color(0.929412, 0, 0.160784, 1)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tbgi4"]
-bg_color = Color(1, 0.188235, 0.258824, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_o6xl0"]
+bg_color = Color(0.866667, 0.294118, 0.0352941, 1)
 
-[sub_resource type="LabelSettings" id="LabelSettings_tefeu"]
-font_size = 25
-outline_size = 5
-outline_color = Color(0, 0, 0, 1)
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tipki"]
+bg_color = Color(0, 0.392157, 0.894118, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_85g3d"]
+bg_color = Color(0.6, 0.14902, 0.6, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_tbgi4"]
 height = 6.26562
@@ -141,30 +144,68 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.521, 0)
 
 [node name="PlayerNeeds" type="Node3D" parent="Player"]
 
-[node name="Need" type="Control" parent="Player/PlayerNeeds"]
-layout_mode = 3
-offset_left = 4.0
-offset_top = 6.0
-offset_right = 304.0
-offset_bottom = 52.0
+[node name="Health" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
+script = ExtResource("4_tefeu")
+max_value = 100.0
+start_value = 80.0
+ui_bar = NodePath("NeedBar")
 
-[node name="NeedBar" type="ProgressBar" parent="Player/PlayerNeeds/Need"]
-layout_mode = 0
-offset_right = 300.0
-offset_bottom = 45.0
-theme_override_styles/background = SubResource("StyleBoxFlat_jyhfs")
-theme_override_styles/fill = SubResource("StyleBoxFlat_tbgi4")
-value = 50.0
-show_percentage = false
+[node name="NeedBar" parent="Player/PlayerNeeds/Health" instance=ExtResource("4_tbgi4")]
+offset_left = 21.0
+offset_top = 585.0
+offset_right = 321.0
+offset_bottom = 630.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_tefeu")
+need_name = "Health"
 
-[node name="Label" type="Label" parent="Player/PlayerNeeds/Need/NeedBar"]
-layout_mode = 0
-offset_right = 300.0
-offset_bottom = 44.0
-text = "Health: 100 / 100"
-label_settings = SubResource("LabelSettings_tefeu")
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="Hunger" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
+script = ExtResource("4_tefeu")
+max_value = 100.0
+start_value = 70.0
+decay_rate = 0.3
+ui_bar = NodePath("NeedBar")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Hunger" instance=ExtResource("4_tbgi4")]
+offset_left = 21.0
+offset_top = 635.0
+offset_right = 321.0
+offset_bottom = 680.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_o6xl0")
+max_value = 0.0
+script = ExtResource("4_tefeu")
+max_value = 0.0
+start_value = 0.0
+regen_rate = 0.0
+decay_rate = 0.0
+
+[node name="Thirst" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
+script = ExtResource("4_tefeu")
+max_value = 100.0
+start_value = 70.0
+decay_rate = 1.0
+ui_bar = NodePath("NeedBar")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Thirst" instance=ExtResource("4_tbgi4")]
+offset_left = 21.0
+offset_top = 685.0
+offset_right = 321.0
+offset_bottom = 730.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_tipki")
+need_name = "Thirst"
+
+[node name="Sleep" type="Node" parent="Player/PlayerNeeds" node_paths=PackedStringArray("ui_bar")]
+script = ExtResource("4_tefeu")
+max_value = 100.0
+regen_rate = 1.0
+ui_bar = NodePath("NeedBar")
+
+[node name="NeedBar" parent="Player/PlayerNeeds/Sleep" instance=ExtResource("4_tbgi4")]
+offset_left = 21.0
+offset_top = 734.0
+offset_right = 321.0
+offset_bottom = 779.0
+theme_override_styles/fill = SubResource("StyleBoxFlat_85g3d")
+need_name = "Sleep"
 
 [node name="Tree" type="StaticBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.16593, 4.93812)
